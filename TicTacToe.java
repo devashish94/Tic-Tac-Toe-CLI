@@ -71,6 +71,10 @@ public class TicTacToe {
         System.out.print("[Player " + playerTurn(round) + "]: Enter the cell number (1 to 9): ");
     }
 
+    private static void startBorder() {
+        System.out.println("\n**************************************** Tic Tac Toe ****************************************");
+    }
+
     private static void endBanner() {
         System.out.println("******************************************** END ********************************************");
     }
@@ -84,8 +88,7 @@ public class TicTacToe {
             }
         }
 
-        /* Decoration */
-        System.out.println("\n**************************************** Tic Tac Toe ****************************************");
+        startBorder(); /* shows the Tic Tac Toe name when the game starts * /
 
         /* Set the symbols for both the players */
         System.out.print("PLAYER 1, Enter your chosen symbol from 'o' and 'x': ");
