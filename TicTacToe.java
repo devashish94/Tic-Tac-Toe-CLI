@@ -37,7 +37,7 @@ public class TicTacToe {
         }
 
         /* check for TIE */
-        if (round == MAX_ROUNDS - 1) {
+        if (round == MAX_ROUNDS) {
             return 404;
         }
         return 0;
@@ -119,7 +119,7 @@ public class TicTacToe {
 
         /* Game Loop */
         int round = 1;
-        while (round != MAX_ROUNDS) {
+        while (round != MAX_ROUNDS + 1) {
 
             roundEndBanner(); /* prints a dotted hyphen indicating that the round has ended */
             System.out.println("[ROUND : " + round + "]\n");
