@@ -74,7 +74,9 @@ public class TicTacToe {
     private static void startBorder() {
         System.out.println("\n**************************************** Tic Tac Toe ****************************************");
     }
-
+    private static void roundLineBreak() {
+        System.out.println("-------------------------------------------------------------------------");
+    }
     private static void endBanner() {
         System.out.println("******************************************** END ********************************************");
     }
@@ -107,7 +109,8 @@ public class TicTacToe {
         /* Game Loop */
         int round = 0;
         while (round < 9) {
-            System.out.println("-------------------------------------------------------------------------");
+
+            roundLineBreak();
             System.out.println("[ROUND : " + round + "]\n");
 
             /* Alternating between Player 1 and Player 2 */
