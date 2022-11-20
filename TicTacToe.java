@@ -1,6 +1,7 @@
 import java.util.Scanner;
 
 public class TicTacToe {
+    static final int MAX_ROUNDS = 9; /* Max rounds in the game of standard Tic Tac Toe */
     private static void board(char[][] arr) {
         /* This function prints out the board along with borders and dividers, in other words with decoration */
         String gameBoard = "+---+---+---+\n"
@@ -36,10 +37,9 @@ public class TicTacToe {
         }
 
         /* check for TIE */
-        if (round == 8) {
+        if (round == MAX_ROUNDS - 1) {
             return 404;
         }
-
         return 0;
     }
 
@@ -48,6 +48,8 @@ public class TicTacToe {
         int location = 10;
         String l = read.next();
         if (l.length() != 1) {
+            /* if the input string has invalid values for an integer then return default
+             * value so that it can be handled later on */
             return location;
         } else {
             location = l.charAt(0) - '0';
@@ -55,8 +57,11 @@ public class TicTacToe {
         return location - 1;
     }
 
-    private static int playerTurn (int round) {
-        return round % 2 + 1;
+    private static String playerTurn (int round, String nameOne, String nameTwo) {
+        if (round % 2 == 1) {
+            return nameOne;
+        }
+        return nameTwo;
     }
 
     private static boolean validLocation(int location) {
@@ -67,8 +72,8 @@ public class TicTacToe {
         return arr[location / 3][location % 3 ] == ' ';
     }
 
-    private static void printInputStatement(int round) {
-        System.out.print("[Player " + playerTurn(round) + "]: Enter the cell number (1 to 9): ");
+    private static void printInputStatement(int round, String nameOne, String nameTwo) {
+        System.out.print("[Player-" + playerTurn(round, nameOne, nameTwo) + "]: Enter the cell number (1 to 9): ");
     }
 
     private static void startBanner() {
@@ -90,10 +95,16 @@ public class TicTacToe {
             }
         }
 
-        startBanner(); /* shows the Tic Tac Toe banner when the game starts * /
+        startBanner(); /* shows the Tic Tac Toe banner when the game starts */
+
+        /* Register the Names of Both the Players */
+        System.out.print("Player-1: Enter your Name: ");
+        String playerOneName = read.next();
+        System.out.print("Player-2: Enter your Name: ");
+        String playerTwoName = read.next();
 
         /* Set the symbols for both the players */
-        System.out.print("PLAYER 1, Enter your chosen symbol from 'o' and 'x': ");
+        System.out.print("[Player-" + playerOneName + "]: Enter your chosen symbol from 'o' and 'x': ");
         char playerOne_value = read.next().charAt(0);
 
         /* Handle the invalid player symbol exception */
@@ -101,20 +112,21 @@ public class TicTacToe {
             System.out.print("[Invalid-Symbol] Enter valid value: ");
             playerOne_value = read.next().charAt(0);
         }
-        char playerTwo_value = (playerOne_value == 'o') ? 'x' : 'o';
+        char playerTwo_value = (playerOne_value == 'o') ? 'x' : 'o'; /* assign the player symbols */
 
         /* Print the board for the first player */
         board(arr);
 
         /* Game Loop */
-        int round = 0;
-        while (round < 9) {
+        int round = 1;
+
+        while (round != MAX_ROUNDS) {
 
             roundEndBanner(); /* prints a dotted hyphen indicating that the round has ended */
             System.out.println("[ROUND : " + round + "]\n");
 
             /* Alternating between Player 1 and Player 2 */
-            printInputStatement(round);
+            printInputStatement(round, playerOneName, playerTwoName);
 
             /* Location input */
             int location = inputLocation();
@@ -123,12 +135,12 @@ public class TicTacToe {
             while (!validLocation(location) || !cellFilled(arr, location)) {
                 if (!validLocation(location)) System.out.print("[Invalid-Location] ");
                 else System.out.print("[Cell-Already-Filled] ");
-                printInputStatement(round);
+                printInputStatement(round, playerOneName, playerTwoName);
                 location = inputLocation();
             }
 
             /* Putting the 'o' or 'x' inside the cell */
-            arr[location / 3][location % 3] = (round % 2 == 0) ? playerOne_value : playerTwo_value;
+            arr[location / 3][location % 3] = (playerTurn(round, playerOneName, playerTwoName).equals(playerOneName)) ? playerOne_value : playerTwo_value;
 
             /* Print the board with Decoration */
             board(arr);
@@ -138,7 +150,7 @@ public class TicTacToe {
 
             /* checks for WIN condition */
             if (condition == 1) {
-                System.out.println("!! Player-" + playerTurn(round) + " WINS the Game !!");
+                System.out.println("!! Player-" + playerTurn(round, playerOneName, playerTwoName) + " WINS the Game !!");
                 endBanner();
                 return;
             } else if (condition == 404) { /* check for TIE condition */
