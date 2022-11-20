@@ -1,0 +1,14 @@
+# ignore not needed java files
+#Java-Coding/out/
+/out/*
+*.class
+*.iml
+.idea/
+
+# ignore not needed c++ files
+*.exe
+*.out
+*.o
+
+# ignore vscode configuration files
+.vscode/ 

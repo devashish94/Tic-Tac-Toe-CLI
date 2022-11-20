@@ -37,7 +37,7 @@ public class TicTacToe {
         }
 
         // check for TIE
-        if (round == 9) {
+        if (round == 8) {
             return 404;
         }
 
