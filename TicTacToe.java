@@ -119,7 +119,6 @@ public class TicTacToe {
 
         /* Game Loop */
         int round = 1;
-
         while (round != MAX_ROUNDS) {
 
             roundEndBanner(); /* prints a dotted hyphen indicating that the round has ended */
